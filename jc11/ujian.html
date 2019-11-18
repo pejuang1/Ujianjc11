@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+            tr,td,table{
+                border: 1px solid lightcoral;
+                border-collapse: collapse;
+                padding: 10px
+            }
+            </style>
+</head>
+<body>
+
+    <center>
+         <div id="divlogin">
+            <h1>Madding</h1>
+            <span>Username : <input type="text" id="nama"></span> <br> <br>
+            <span>Password : <input type="password" id="password"></span> <br> <br>
+            <button onclick="LoginCLick()">Login</button>
+            <br>
+            <br>
+            <table>
+                <td>No</td>
+                <td>Kegiatan</td>
+                <td>Hari</td>
+                <td>Poster</td>
+                <td>Act</td>
+            </table>
+            <h1></h1>
+        </div>
+            <br> 
+        <h2></h2> 
+        <p></p>
+         <div id="divuser">
+                <h1></h1>
+                <p></p>
+                <br>
+                <h3></h3>
+                              
+               
+                <p id="textlist"></p>
+                <br>
+                <table>
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+
+                <br>
+                <br>            
+         </div>
+
+        
+
+    </center>
+
+    <script>
+    class User {
+  constructor (a,b,c) {
+      this.nama=a,
+      this.password=b,
+      this.role=c
+  }
+}
+
+
+var dataUser=[
+  new User('rizal','12345','user'),
+  new User('admin','12345','admin')
+
+]
+
+var dataUserLogin = {}
+const LoginCLick=()=> {
+  var username1=document.getElementById('nama').value
+  var password1=document.getElementById('password').value
+  var login=false 
+  for(var i=0;i<dataUser.length;i++) {
+      if(username1==dataUser[i].nama && password1==dataUser[i].password) {
+          login=true
+          dataUserLogin=dataUser[i]
+      }
+  }
+  
+
+  if(login) {
+      document.getElementsByTagName('h2')[0].innerHTML=`${dataUserLogin.nama}`
+      if(dataUserLogin.role=='admin') {
+          document.getElementsByTagName('h2')[0].innerHTML=`${dataUserLogin.nama}`
+          document.getElementsByTagName('p')[1].innerHTML= `<table>
+          <thead>
+              <tr>
+                  <td>Kegiatan</td> 
+                  <td>Hari</td>
+                  <td>Poster</td>
+                  <td>Action</td>
+              </tr>
+          </thead>
+          <tbody> </tbody>
+          <tfoot> 
+          <tr>
+          
+          <td><input type="text" class="addproduK" placeholder="Masukan Nama kegiatan"/></td>
+          <td><input type="number" class="addproduK" placeholder="Masukan Hari"/></td>
+          <td><input type="text" class="addproduK" placeholder="Masukan url Poster"></td>
+          <td><button class="button1" onclick="editclik()">Add</button>
+          </tr>
+          </tfoot>
+          </table>`
+          
+          printkegiatan(listdata)
+            
+
+
+
+      } else {
+          document.getElementsByTagName('p')[1].innerHTML=`<table>
+          <thead>
+              <tr>
+                  <td>Kegiatan</td> 
+                  <td>Hari</td>
+                  <td>Poster</td>
+                  <td>Action</td>
+              </tr>
+          </thead>
+          <tbody> </tbody>       
+          </table>`
+          document.getElementsByTagName('h3')[0].innerHTML=``
+          printkegiatan1(listdata)        
+         
+
+      }
+      document.getElementsByTagName('p')[0].innerHTML=`<button onclick="logoutuser()">Logout</button>`
+      document.getElementById('divlogin').innerHTML=``
+  } else {
+      document.getElementsByTagName('h2')[0].innerHTML=`Password salah`
+  }
+
+}
+
+const logoutuser=()=>{
+dataUserLogin={}
+document.getElementsByTagName('h2')[0].innerHTML=''
+document.getElementsByTagName('h3')[0].innerHTML=''
+document.getElementsByTagName('p')[0].innerHTML=``
+document.getElementById('divlogin').innerHTML=`<h1>Madding</h1>
+<span>Username : <input type="text" id="nama"></span> <br> <br>
+<span>Password : <input type="password" id="password"></span> <br> <br>
+<button onclick="LoginCLick()">Login</button>
+            <br>
+            <br>
+            <table>
+                <td>No</td>
+                <td>Kegiatan</td>
+                <td>Hari</td>
+                <td>Poster</td>
+                <td>Act</td>
+            </table>`
+
+document.getElementsByTagName('h1')[1].innerHTML=``
+document.getElementsByTagName('p')[1].innerHTML=``
+document.getElementsByTagName('h3')[0].innerHTML=``
+
+}
+
+class List{
+  constructor(a,b,c) {
+      this.kegiatan=a,
+      this.hari=b,
+      this.poster=c
+  }
+}
+
+var listdata=[
+      new List('Mancing','senin','https://explorewisata.com/wp-content/uploads/2018/12/asyiknya-mancing-ikan-di-kolam-pemancingan-ikan-mabuk-manding-malang.jpg'),
+      new List('Galau','selasa','https://i0.wp.com/titikdua.net/wp-content/uploads/2018/07/Kata-kata-galau-patah-hati-800x533.jpg'),
+]
+
+var indexedit=-1
+var inddexdel=-2
+const printkegiatan1=(a)=> {
+  var output=''   
+  a.forEach((val,index) => {
+      output+= `<tr>
+          <td>${val.kegiatan}</td>
+          <td>${val.hari}</td>
+          <td> <img src=${val.poster} height='100px'/> </td>              
+      </tr>`
+         
+  });
+  document.getElementsByTagName('tbody')[0].innerHTML=output
+}
+
+const printkegiatan=(a)=> {
+  var output=''   
+  a.forEach((val,index) => {
+      output+= `<tr>
+          <td>${val.kegiatan}</td>
+          <td>${val.hari}</td>
+          <td> <img src=${val.poster} height='100px'/> </td>
+          <td>
+              <button class="addcart" onclick="DeleteClick(${index})">Delete</button>
+              <button class="addcart" onclick="EditClick(${index})">Edit</button> 
+          </td>              
+      </tr>`
+         
+  });
+  document.getElementsByTagName('tbody')[0].innerHTML=output
+}
+
+const editclik=(bebas)=>{
+        indexedit=bebas
+        printkegiatan(listdata)
+}
+const delete2=(index)=> {
+  var chekDelete=confirm('anda yakin?')
+  var head=''
+
+  if(chekDelete==true) {
+      
+      listdata.splice(index,1)
+  }
+  printkegiatan(listdata)
+}
+    </script>
+</body>
+</html>
